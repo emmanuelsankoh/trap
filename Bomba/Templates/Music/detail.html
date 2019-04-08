@@ -1,0 +1,59 @@
+{%extends 'Music/base.html'%}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+{%block content%}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Album information-->
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img src="{{album.album_cover.url}}" class="img img-responsive" style="height:20px;width:20px">
+                    <div class="caption">
+                        <h5>{{album.album_name}}</h5>
+                        <h5>{{album.album_genre}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <! --Song information-->
+        <div class="col-sm-9">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="">{{album.song_set.count}} Songs</a></li>
+                <li><a href="{% url 'Bomba:new-song' album.id%}">Add Song</a></li>
+            </ul>
+            <div class="panel panel-default" style="margin:3px;">
+                <div class="panel-body">
+                <h3 class="text-info">Songs</h3>
+                 <hr>
+
+                <table class="table">
+                    <thead>
+                        <th>Song Name</th>
+                        <th>Audio</th>
+                        <th>Favourite</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                    {% if album.song_set%}
+                        {%for song in album.song_set.all%}
+                            <tr>
+                                <td>{{song.song_name}}</td>
+                                <td><a href="{{song.song_audio.url}}" class="btn btn-info btn=sm" target=""><i class="fas fa-play"></i></a></td>
+                                <td><a href="" class="btn btn-danger btn-sm"><i class="fas fa-star"></i></a></td>
+                                <td>
+                                    <a href="{% url 'Bomba:update-song' song.id%}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+                                    <a href="{% url 'Bomba:delete-song' album.id song.id%}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                    {%endif%}
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

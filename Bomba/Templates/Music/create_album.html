@@ -1,0 +1,27 @@
+{%extends 'Music/base.html'%}
+{%load crispy_forms_tags%}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-info panel-body">
+                <h3 class="text-primary">Add Album</h3>
+                <hr>
+                <form method="POST" enctype="multipart/form-data">
+                    {%if message%}
+                    <div class="alert alert-danger">
+                        <h4 class="text-primary">{{Message}}</h4>
+                    </div>
+                    {%endif%}
+                    {%csrf_token%}
+                    {{form|crispy}}
+                    <button type="submit" class="btn btn-info">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
