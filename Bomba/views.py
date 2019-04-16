@@ -13,18 +13,18 @@ def index(request):
     song_results=Song.objects.all()
     query=request.GET.get("q")
     if query:
-        album=albums.filter(
+        albums=albums.filter(
             Q(album_name__icontains=query)|
             Q(artist_name__icontains=query)
         ).distinct()
         song_results=song_results.filter(
             Q(song_name__icontains=query)
         ).distinct
-    return render(request, 'Music/index.html', {
-        'albums':albums,
-        'songs':song_results,
-    })
-
+        return render(request, 'Music/index.html', {
+            'albums':albums,
+            'songs':song_results,
+        })
+    return render(request, 'Music/index.html', {'albums': albums})
 
 def detail(request,album_id):
     album=get_object_or_404(Album, pk=album_id)
@@ -100,14 +100,14 @@ def delete_song(request, album_id,song_id):
 def signup(request):
     form=UserForm(request.POST or None)
     if form.is_valid():
-        email=form.cleaned_data['email']
+        username=form.cleaned_data['username']
         password=form.cleaned_data['password']
         user=form.save(commit=False)
         user.set_password(password)
         user.save()
-        user=authenticate(email=email,pasword=password)
+        user=authenticate(username=username,pasword=password)
         if user is not None:
-           # if user.is_active:
+            if user.is_active:
                 login(request,user)
                 return redirect('Bomba:index')
     return render(request,'registration/signup.html', {'form':form})
@@ -121,7 +121,7 @@ def signin(request):
             if user.is_active:
                 login(request,user)
                 return redirect('Bomba:index')
-    return render(request, 'Music/index.html')
+    return render(request, 'registration/login.html')
 
 
 def logout_user(request):

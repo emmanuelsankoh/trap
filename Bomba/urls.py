@@ -15,5 +15,5 @@ urlpatterns=[
     path('(?P<album_id>[0-9]+)/delete-album', views.album_delete, name='album-delete'),
     path('(?P<album_id>[0-9]+)/new-song', views.create_song, name='new-song'),
     path('(?P<album_id>[0-9]+)/update-song', views.SongsUpdateView.as_view(), name='update-song'),
-    path('(?P<album_id>[0-9]+)/delete-song/(?P<song_id>[0-9]+)/delete-song', views.delete_song, name='delete-song')
+    path('(?P<album_id>[0-9]+)/delete-song/(?P<song_id>[0-9]+)/delete-song', views.delete_song, name='delete-song'),
 ]
